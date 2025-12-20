@@ -1,0 +1,477 @@
+/* -------------------------
+   GLOBAL RESET
+-------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(180deg, #0b1220, #0f1724);
+  margin: 0;
+  display: block; /* avoid flex vertical centering which causes reflow on height changes */
+  color: #e6eef8;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow: auto; /* allow page scrollbar so content can be scrolled */
+}
+
+/* Prevent mobile browsers from auto-zooming when inputs are focused */
+html, body {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+/* -------------------------
+   MAIN CONTAINER
+-------------------------- */
+.app-container {
+  width: calc(100% - 32px);
+  max-width: 1200px;
+  min-height: 100vh; /* allow container to expand beyond viewport when needed */
+  background: linear-gradient(180deg,#0f1724,#071026);
+  border-radius: 6px;
+  padding: 14px;
+  box-shadow: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  margin: 12px auto; /* center horizontally without affecting vertical flow */
+}
+
+/* -------------------------
+   HEADER
+-------------------------- */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding-right: 8px;
+}
+
+.header h1 {
+  font-size: 20px;
+  color: #e6eef8;
+}
+
+.header h1.brand{
+  font-size: clamp(22px, 4.2vw, 40px);
+  font-weight: 800;
+  color: #e6eef8;
+  letter-spacing: 0.2px;
+  margin: 0;
+}
+
+.header p {
+  font-size: 13px;
+  color: #9fb2d9;
+  margin-top: 4px;
+}
+
+/* toolbar */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.tabs { display:flex; gap:8px; }
+.tab {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.04);
+  color: #9fb2d9;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.tab.active{
+  background: rgba(255,255,255,0.03);
+  color: #e6eef8;
+  border-color: rgba(255,255,255,0.06);
+}
+.summarize-btn{
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* -------------------------
+   INPUT SECTION
+-------------------------- */
+.input-section {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.input-section input {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+.input-section input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.input-section button {
+  padding: 12px 20px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 200ms ease, color 200ms ease, transform 60ms ease;
+}
+
+/* Ensure interactive controls use at least 16px so mobile browsers don't zoom */
+input, button, select, textarea, .toggle, .primary-btn, .video-input input, .input-section input, .video-input button, .input-section button, .chat-input input {
+  font-size: 16px !important;
+}
+
+/* keep small decorative elements unaffected */
+.muted, .card p, .card li { font-size: 14px }
+
+.input-section button:hover {
+  background: #1e40af;
+}
+
+/* -------------------------
+   SUMMARY CARD
+-------------------------- */
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.45);
+}
+
+.card h2 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: #e6eef8;
+}
+
+.card p,
+.card li {
+  font-size: 14px;
+  color: #b9d0f0;
+  line-height: 1.6;
+}
+
+.card ul { padding-left: 18px; }
+
+/* layout columns */
+.layout{
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  align-items: start;
+  flex: 1 1 auto;
+  overflow: visible; /* allow layout to grow and page to scroll */
+  padding: 8px;
+}
+.left{ display:flex; flex-direction:column; gap:12px; min-width:0; height:100%; }
+.right{ display:flex; flex-direction:column; gap:12px; height:100%; }
+
+.video-thumb{ min-height:200px; display:flex; align-items:center; justify-content:center; }
+.transcript { overflow:auto; flex: 1 1 auto; }
+.transcript h4{ color:#cfe1ff; margin-bottom:10px }
+.transcript-block{ display:flex; gap:12px; margin-bottom:12px; align-items:flex-start }
+.transcript-block strong{ color:#7fb0ff; width:72px; flex: 0 0 72px }
+.transcript-block p{ color:#dbeafe; margin:0; word-break:break-word }
+
+.transcript-block.clickable{ cursor: pointer; transition: background 0.12s; padding:6px; border-radius:6px }
+.transcript-block.clickable:hover{ background: rgba(255,255,255,0.02) }
+.transcript-block.clickable.selected{ background: rgba(37,99,235,0.08) }
+
+.view-toggle { display:flex; gap:8px }
+.view-toggle .toggle{ background: transparent; border: 1px solid rgba(255,255,255,0.04); color:#9fb2d9; padding:6px 10px; border-radius:8px; cursor:pointer }
+.view-toggle .toggle.active{ background: rgba(255,255,255,0.03); color:#e6eef8; border-color: rgba(255,255,255,0.06) }
+
+.transcript-preview { color:#e6eef8 }
+
+/* Summary card specific */
+.summary-card{ padding:20px }
+.summary-header{ display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px }
+.summary-header h2{ margin:0 }
+.summary-meta{ color:#9fb2d9; font-size:12px }
+.summary-body .lead{ color:#dfeeff; margin-bottom:12px }
+.key-topics h4{ color:#cfe1ff; margin-bottom:8px }
+.key-topics ul{ list-style:disc; padding-left:18px }
+.key-topics li{ color:#bcd6f8; margin-bottom:6px }
+
+/* -------------------------
+   CHATBOT SECTION
+-------------------------- */
+.chat-container{
+  border-radius: 14px;
+  padding: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  margin-bottom: 18px;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.45);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.chat-box{
+  max-height: 340px;
+  overflow-y: auto;
+  padding: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  border-radius: 12px;
+  margin-bottom: 6px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.chat-message{
+  display:flex;
+  gap:10px;
+  align-items:flex-end;
+  font-size:14px;
+}
+
+.chat-message .avatar{
+  width:34px; height:34px; border-radius:50%; flex:0 0 34px; display:inline-block;
+  background:linear-gradient(180deg,#1f2937,#111827); color:#cfe1ff; display:flex; align-items:center; justify-content:center; font-weight:700;
+}
+
+.chat-message .bubble{
+  padding:10px 12px; border-radius:12px; max-width:78%; line-height:1.4; box-shadow: 0 6px 18px rgba(2,6,23,0.25);
+}
+
+.chat-message.bot{ flex-direction:row; }
+.chat-message.bot .bubble{ background: rgba(255,255,255,0.03); color:#e6eef8; border-top-left-radius:6px; }
+
+.chat-message.user{ flex-direction:row-reverse; }
+.chat-message.user .bubble{ background: linear-gradient(90deg,#2563eb,#4f46e5); color:white; border-top-right-radius:6px; }
+
+.chat-message .meta{ display:block; font-size:11px; color:#9fb2d9; margin-top:6px }
+
+.chat-input{ display:flex; gap:8px; align-items:center }
+.chat-input input{ flex:1; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); color: #e6eef8 }
+.chat-input button{ padding:10px 16px; background:#2563eb; color:#fff; border:none; border-radius:10px; cursor:pointer; font-weight:600 }
+.chat-input button:hover{ filter:brightness(0.95) }
+
+/* visual scrollbar for chat box (modern) */
+.chat-box::-webkit-scrollbar{ width:8px }
+.chat-box::-webkit-scrollbar-thumb{ background: rgba(255,255,255,0.06); border-radius:8px }
+
+/* Player and controls */
+.player { min-height: 260px; display:flex; align-items:center; justify-content:center; padding:12px; flex: 0 0 44%; }
+.player-wrap{ width:100%; height:0; padding-bottom:56.25%; position:relative }
+.player-wrap iframe{ position:absolute; inset:0; width:100%; height:100%; border-radius:8px }
+.player-placeholder{ color:#9fb2d9; padding:24px; text-align:center }
+
+/* increase player prominence for readability */
+.player { min-height: 320px; }
+.player-placeholder{ font-size:16px }
+
+.controls { display:flex; flex-direction:column; align-items:stretch; gap:12px; padding:10px; }
+.primary-btn{ background:#2563eb; color:white; border:none; padding:12px 16px; border-radius:10px; cursor:pointer; font-weight:600; min-width:140px }
+.primary-btn + .primary-btn{ margin-left:8px }
+
+/* Video input controls alignment */
+.video-input { display:flex; gap:12px; align-items:center; width:100% }
+.video-input input { flex:1; min-width:0; padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); color: #e6eef8 }
+.video-input button { flex:0 0 auto; padding:10px 14px; border-radius:8px; border:none; background:#2563eb; color:#fff; cursor:pointer }
+
+/* make input area stand out and align action buttons beneath */
+.controls .video-input { background: rgba(255,255,255,0.01); padding:8px; border-radius:8px }
+
+/* ensure quiz panel stays readable and scrollable */
+.quiz-panel{ display:flex; flex-direction:column; gap:10px; height:100%; }
+.quiz-panel .quiz-card, .quiz-panel .card{ width:100% }
+.quiz-panel { overflow:auto }
+.export-panel { max-height: 220px; overflow:auto }
+
+.transcript-body{ max-height: none; overflow:auto; padding-top:8px }
+.transcript.card { min-height: 260px; }
+.transcript-body { max-height: 420px; }
+.summary-text{ color:#dfeeff; line-height:1.6 }
+.muted{ color:#7f93b2 }
+
+.quiz-panel h3{ margin:0 0 10px 0; color:#e6eef8 }
+
+/* Floating chat button and modal */
+.chat-float-btn{
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  background:#2563eb;
+  color:white;
+  border:none;
+  box-shadow: 0 8px 20px rgba(37,99,235,0.18);
+  cursor:pointer;
+  font-size:22px;
+  z-index: 1200;
+}
+
+/* Make touch interactions stable */
+button, input, select, textarea {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Prevent focus/active transforms or scaling that could visually zoom or shift layout */
+button:focus, button:active, .toggle:focus, .toggle:active, .primary-btn:focus, .primary-btn:active, .video-input button:focus, .video-input button:active {
+  outline: none;
+  transform: none !important;
+}
+
+/* Ensure transitions don't animate layout-changing properties */
+.tab, .toggle, .primary-btn, .input-section button, .video-input button {
+  transition: background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+/* backdrop when chat opens */
+.chat-backdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1190;
+}
+
+.chat-modal{
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(720px, 94%);
+  max-width: 720px;
+  max-height: 80vh;
+  /* stronger opaque background so chat content is clearly visible */
+  background: rgba(6,10,20,0.96);
+  border-radius: 12px;
+  box-shadow: 0 30px 80px rgba(31, 31, 32, 0.8);
+  overflow: hidden;
+  border: 1px solid rgba(245, 234, 234, 0.04);
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+}
+.chat-modal .chat-modal-body{ max-height: calc(80vh - 64px); overflow:auto }
+.chat-modal-header{ display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-bottom:1px solid rgba(255,255,255,0.02) }
+.chat-modal-body{ padding:12px }
+.chat-modal .close{ background:transparent; border:none; color:#cfe1ff; font-size:18px; cursor:pointer }
+
+/* when chat opens, dim/blur the entire app so the chat stands out */
+body.chat-open .app-container{
+  opacity: 0.12;
+  filter: blur(4px) saturate(0.95);
+  transition: opacity 220ms ease, filter 220ms ease;
+  pointer-events: none; /* prevent interaction with background while chat open */
+}
+
+/* keep some elements like backdrop/modal interactive */
+body.chat-open .chat-modal,
+body.chat-open .chat-backdrop {
+  pointer-events: auto;
+}
+
+/* -------------------------
+   QUIZ SECTION
+-------------------------- */
+.quiz-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.01));
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.quiz-card h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.quiz-option {
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+/* Keep quiz header actions (generate/download) visible while scrolling quiz panel */
+.quiz-card .quiz-header {
+  position: sticky;
+  top: 12px;
+  background: linear-gradient(180deg, rgba(15,23,36,0.6), rgba(15,23,36,0.2));
+  padding-top: 6px;
+  padding-bottom: 6px;
+  z-index: 4;
+  border-radius: 8px;
+}
+
+/* -------------------------
+   SCORE & FEEDBACK
+-------------------------- */
+.score-card {
+  background: #f0fdf4;
+  border-left: 5px solid #22c55e;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.score-card strong {
+  color: #166534;
+}
+
+/* -------------------------
+   EXPORT BUTTON
+-------------------------- */
+.export-btn {
+  display: block;
+  margin: auto;
+  padding: 10px 18px;
+  background: #7c3aed;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.export-btn:hover {
+  background: #5b21b6;
+}
+
+/* -------------------------
+   RESPONSIVE
+-------------------------- */
+@media (max-width: 768px) {
+  .input-section { flex-direction: column; }
+  .layout{ grid-template-columns: 1fr; }
+  .transcript{ max-height:240px }
+}
+
+@media (min-width: 1200px){
+  .layout{ grid-template-columns: 1fr 420px }
+}
+
+/* make right column sticky so it remains visible */
+.right{ position: sticky; top: 20px; align-self: start }
