@@ -18,7 +18,7 @@ export default function VideoForm({ url: propUrl, setUrl: propSetUrl, onProcess 
       return;
     }
 
-    await API.post("/session/start", { youtubeUrl: url });
+    await API.post("/session/start", { videoUrl: url });
     alert("Video processing started");
   };
 
