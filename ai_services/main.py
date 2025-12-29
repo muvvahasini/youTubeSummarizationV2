@@ -1,21 +1,20 @@
 # main.py
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field, model_validator
 from typing import Optional
 import re
 import json
-from ai_services.reports.report import export_report
-
-
+from reports.report import export_report
 
 # Internal imports
-from ai_services.rag.question_generator import generate_questions
-from ai_services.transcript_extracter.transcript import fetch_youtube_transcript
-from ai_services.ingestion.chunker import chunk_transcript
-from ai_services.vectorestore.retriever import retrieve_top_k
-from ai_services.rag.summarizer import generate_summary
-from ai_services.rag.evaluator import evaluate_answers
-from ai_services.rag.chat import chat_with_video, ChatRequest, ChatResponse
+from rag.question_generator import generate_questions
+from transcript_extracter.transcript import fetch_youtube_transcript
+from ingestion.chunker import chunk_transcript
+from vectorestore.retriever import retrieve_top_k
+from rag.summarizer import generate_summary
+from rag.evaluator import evaluate_answers
+from rag.chat import chat_with_video, ChatRequest, ChatResponse
 
 
 app = FastAPI(
