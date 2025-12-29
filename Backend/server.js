@@ -376,8 +376,15 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    console.log(`API available at http://localhost:${PORT}/api`);
-});
+// Start server with error handling
+try {
+    app.listen(PORT, '0.0.0.0', () => {
+        console.log(`Server running on port ${PORT}`);
+        console.log(`API available at http://0.0.0.0:${PORT}/api`);
+        console.log(`Environment: ${process.env.NODE_ENV}`);
+        console.log(`AI Services URL: ${process.env.AI_SERVICES_URL}`);
+    });
+} catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+}
