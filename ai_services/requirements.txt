@@ -5,3 +5,5 @@ python-dotenv
 youtube-transcript-api
 requests
 whisper
+yt-dlp
+pydantic
