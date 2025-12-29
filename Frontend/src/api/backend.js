@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api", // backend port
+  baseURL: "https://youtubesummarizationv2-production.up.railway.app/api", // backend port
 });
 
 // Add request interceptor for debugging

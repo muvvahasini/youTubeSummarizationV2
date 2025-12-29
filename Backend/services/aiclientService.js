@@ -14,7 +14,8 @@ function getOpenAI() {
 export const askRagQuestion = async (sessionId, question, videoId = null) => {
   try {
     // Call the AI services RAG chat endpoint
-    const response = await axios.post('http://localhost:8000/chat', {
+    const AI_SERVICES_URL = process.env.AI_SERVICES_URL || 'https://successful-youthfulness-production-692c.up.railway.app';
+    const response = await axios.post(`${AI_SERVICES_URL}/chat`, {
       video_id: videoId,
       question: question,
       language: 'en'

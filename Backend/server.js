@@ -10,6 +10,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const AI_SERVICES_URL = process.env.AI_SERVICES_URL || 'https://successful-youthfulness-production-692c.up.railway.app';
 
 // Middleware
 app.use(cors());
@@ -134,7 +135,7 @@ app.get('/api/session/transcript', async (req, res) => {
 
         // Call ai_services to get transcript
         try {
-            const response = await axios.post(`http://localhost:8000/transcript`, {
+            const response = await axios.post(`${AI_SERVICES_URL}/transcript`, {
                 video_id: videoId,
                 language: 'en'
             });
@@ -185,7 +186,7 @@ app.get('/api/session/summary', async (req, res) => {
 
         // Call ai_services to get summary
         try {
-            const response = await axios.post(`http://localhost:8000/summarize`, {
+            const response = await axios.post(`${AI_SERVICES_URL}/summarize`, {
                 video_id: videoId,
                 language: 'en'
             });
@@ -242,7 +243,7 @@ app.post('/api/quiz/generate', async (req, res) => {
 
         // Call ai_services to get quiz questions
         try {
-            const response = await axios.post(`http://localhost:8000/questions`, {
+            const response = await axios.post(`${AI_SERVICES_URL}/questions`, {
                 video_id: videoId,
                 url: videoUrl,
                 language: 'en'
