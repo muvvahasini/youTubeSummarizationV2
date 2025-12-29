@@ -1,5 +1,5 @@
 from typing import Dict, List, Union
-from ai_services.rag.gemini_client import generate_text
+from rag.gemini_client import generate_text
 
 def generate_summary(retrieved_chunks: list) -> Dict[str, Union[str, List[str]]]:
     """

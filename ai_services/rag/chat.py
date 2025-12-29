@@ -1,7 +1,7 @@
-from ai_services.transcript_extracter.transcript import fetch_youtube_transcript
-from ai_services.ingestion.chunker import chunk_transcript
-from ai_services.vectorestore.retriever import retrieve_top_k
-from ai_services.rag.gemini_client import generate_text
+from transcript_extracter.transcript import fetch_youtube_transcript
+from ingestion.chunker import chunk_transcript
+from vectorestore.retriever import retrieve_top_k
+from rag.gemini_client import generate_text
 from pydantic import BaseModel, model_validator
 from typing import Optional
 

@@ -1,4 +1,4 @@
-from ai_services.rag.gemini_client import generate_text
+from rag.gemini_client import generate_text
 
 
 def evaluate_answers(questions: str, user_answers: dict):

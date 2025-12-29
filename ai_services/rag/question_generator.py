@@ -1,5 +1,5 @@
-from ai_services.transcript_extracter.transcript import fetch_youtube_transcript, extract_video_id
-from ai_services.rag.gemini_client import generate_text
+from transcript_extracter.transcript import fetch_youtube_transcript, extract_video_id
+from rag.gemini_client import generate_text
 def generate_questions(retrieved_chunks: list) -> str:
     """
     Generate questions from transcript chunks.
