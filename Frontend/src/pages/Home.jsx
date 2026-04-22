@@ -15,6 +15,28 @@ export default function Home() {
   const [selectedTranscriptIndex, setSelectedTranscriptIndex] = useState(null);
   const [currentVideoId, setCurrentVideoId] = useState("");
 
+  const getSafeYouTubeVideoId = (rawUrl) => {
+    try {
+      const parsed = new URL(rawUrl);
+      const host = parsed.hostname.toLowerCase();
+      let candidate = "";
+
+      if (host === "youtu.be") {
+        candidate = parsed.pathname.slice(1).split("/")[0];
+      } else if (host === "www.youtube.com" || host === "youtube.com" || host === "m.youtube.com") {
+        candidate = parsed.searchParams.get("v") || "";
+      } else {
+        return "";
+      }
+
+      return /^[A-Za-z0-9_-]{11}$/.test(candidate) ? candidate : "";
+    } catch (e) {
+      return "";
+    }
+  };
+
+  const embedVideoId = getSafeYouTubeVideoId(url);
+
   // Store video URL for chat when URL changes
   const handleUrlChange = async (newUrl) => {
     setUrl(newUrl);
@@ -293,11 +315,11 @@ export default function Home() {
           <section className="left">
             <div className="player card">
               {/* embedded video player */}
-              {url ? (
+              {embedVideoId ? (
                 <div className="player-wrap">
                   <iframe
                     title="youtube-player"
-                    src={`https://www.youtube.com/embed/${(function () { try { const u = new URL(url); const p = u.searchParams.get('v'); if (p) return p; const path = u.pathname.split('/'); return path[path.length - 1]; } catch (e) { return '' } })()}`}
+                    src={`https://www.youtube.com/embed/${embedVideoId}`}
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
